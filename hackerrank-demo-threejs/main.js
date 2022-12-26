@@ -102,10 +102,21 @@ const bigSphereGeometry = new THREE.SphereGeometry(4, 64, 64);
 const bigSphere = new THREE.Mesh( bigSphereGeometry, texturedMaterial);
 scene.add( bigSphere );
 
+const animatedMeshes =  [crystal, crystal2, bigSphere ];
 function animate() {
   requestAnimationFrame( animate );
+  animatedMeshes.map(mesh => mesh.rotation.y += 0.005);
   renderer.render( scene, camera );
-
 }
 
 animate();
+
+
+const moveCamera = () => {
+  const t = document.body.getBoundingClientRect().top;
+  camera.position.z = t * 0.008 + 20;
+  camera.position.y = t * 0.008;
+  camera.rotation.x = t * 0.00095;
+}
+
+document.body.onscroll = moveCamera;
